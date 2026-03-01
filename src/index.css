@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: black;
+}
+
+.glass {
+  background-color: color-mix(in srgb, #1a2329 65%, transparent);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
+  box-shadow: 0 8px 30px color-mix(in srgb, #000000 45%, transparent);
+}
