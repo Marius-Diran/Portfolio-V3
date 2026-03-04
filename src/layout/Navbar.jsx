@@ -11,6 +11,32 @@ const navLinks = [
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
+
+    const openMobileMenu = () => {
+        setIsMobileMenuVisible(true)
+        setIsMobileMenuOpen(true)
+    }
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false)
+    }
+
+    const toggleMobileMenu = () => {
+        if (isMobileMenuOpen) {
+            closeMobileMenu()
+            return
+        }
+
+        openMobileMenu()
+    }
+
+    const handleMobileMenuAnimationEnd = () => {
+        if (!isMobileMenuOpen) {
+            setIsMobileMenuVisible(false)
+        }
+    }
+
     return (
         <header className=" text-white p-4 fixed w-full top-0 z-10">
             <nav className="container items-center flex justify-between">
@@ -26,18 +52,30 @@ const Navbar = () => {
                 <Button size="sm" className="md:block hidden">Contact Me</Button>
 
                 {/* Mobile Nav Button */}
-                <button className="block md:hidden hover:cursor-pointer" onClick={() => setIsMobileMenuOpen((prev) => !prev)}>
+                <button className="block md:hidden hover:cursor-pointer" onClick={toggleMobileMenu}>
                     {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
             </nav>
             
-            {isMobileMenuOpen && <div className="mx-auto glass px-6 py-3 flex flex-col md:hidden mt-5">
-                {navLinks.map((link, index) => (
-                    <a href={link.href} key={index} className="mx-4 my-1.5 text-gray-300 hover:text-[#E85D5D]">{link.label}</a>
-                ))}
+            {isMobileMenuVisible && (
+                <div
+                    className={`mx-auto glass px-6 py-3 flex flex-col md:hidden mt-5 ${isMobileMenuOpen ? "animate-fadeIn" : "animate-fadeOut"}`}
+                    onAnimationEnd={handleMobileMenuAnimationEnd}
+                >
+                    {navLinks.map((link, index) => (
+                        <a
+                            href={link.href}
+                            key={index}
+                            className="mx-4 my-1.5 text-gray-300 hover:text-[#E85D5D]"
+                            onClick={closeMobileMenu}
+                        >
+                            {link.label}
+                        </a>
+                    ))}
 
-                <Button size="sm" className="block md:hidden mt-4">Contact Me</Button>                
-            </div>}
+                    <Button size="sm" className="block md:hidden mt-4 mb-2">Contact Me</Button>
+                </div>
+            )}
         </header>
     )
 }

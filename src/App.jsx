@@ -1,4 +1,5 @@
 import Navbar from './layout/Navbar'
+import Hero from './sections/Hero'
 
 const App = () => {
   return (
@@ -6,6 +7,9 @@ const App = () => {
       <nav>
         <Navbar />
       </nav>
+      <main>
+        <Hero />
+      </main>
     </div>
   )
 }
