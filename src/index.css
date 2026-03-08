@@ -16,6 +16,10 @@ body {
   box-shadow: 0 8px 30px color-mix(in srgb, #000000 45%, transparent);
 }
 
+.glow-text {
+  text-shadow: 0 0 30px color-mix(in srgb, #f81717 80%, transparent);
+}
+
 @layer utilities {
   @keyframes fadeIn {
     from {
@@ -40,6 +44,22 @@ body {
       opacity: 0;
       transform: translateY(20px);
       filter: blur(10px);
+    }
+  }
+
+  @keyframes slow-drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(20px, -30px);
+    }
+    50% {
+      transform: translate(-15px, -20px);
+    }
+    75% {
+      transform: translate(30px, 10px);
     }
   }
 
