@@ -71,3 +71,70 @@ body {
     animation: fadeOut 0.35s ease-in both;
   }
 }
+
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+.animation-delay-700 {
+  animation-delay: 700ms;
+}
+
+.animation-delay-800 {
+  animation-delay: 800ms;
+}
+
+.animation-delay-900 {
+  animation-delay: 900ms;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1000ms;
+}
+
+.animation-delay-1100 {
+  animation-delay: 1100ms;
+}
+
+.animation-delay-1200 {
+  animation-delay: 1200ms;
+}
+
+@keyframes animated-border {
+  0% {
+    stroke-dashoffset: 400;
+  }
+  100% {
+    stroke-dashoffset: -550;
+  }
+}
+
+.group:hover .animated-border-path {
+  animation: animated-border 1.5s linear infinite;
+}
+
+.animated-border:hover {
+  background-color: color-mix(in srgb, #f81717 15%, transparent);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0 20px color-mix(in srgb, #f81717 20%, transparent);
+}

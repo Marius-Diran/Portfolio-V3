@@ -1,83 +1,101 @@
-import { useState } from "react"
-import Button from "../components/Buttons"
-import { Menu, X } from "lucide-react"
+import { useState } from "react";
+import Button from "../components/Buttons";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
-    { href: "#experience", label: "Experience" },
-    { href: "#contact", label: "Contact" },
-]
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact", label: "Contact" },
+];
 
 const Navbar = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
 
-    const openMobileMenu = () => {
-        setIsMobileMenuVisible(true)
-        setIsMobileMenuOpen(true)
+  const openMobileMenu = () => {
+    setIsMobileMenuVisible(true);
+    setIsMobileMenuOpen(true);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    if (isMobileMenuOpen) {
+      closeMobileMenu();
+      return;
     }
 
-    const closeMobileMenu = () => {
-        setIsMobileMenuOpen(false)
+    openMobileMenu();
+  };
+
+  const handleMobileMenuAnimationEnd = () => {
+    if (!isMobileMenuOpen) {
+      setIsMobileMenuVisible(false);
     }
+  };
 
-    const toggleMobileMenu = () => {
-        if (isMobileMenuOpen) {
-            closeMobileMenu()
-            return
-        }
+  return (
+    <header className=" text-white p-4 fixed w-full top-0 z-50">
+      <nav className="container items-center flex justify-between">
+        <a
+          href="#"
+          className="w-14 hover:rotate-360 transition-transform duration-600"
+        >
+          <img src="/src/assets/m.png" alt="Logo" className="w-full" />
+        </a>
 
-        openMobileMenu()
-    }
+        <div className="mx-auto glass rounded-4xl px-6 py-3 hidden items-center md:flex">
+          {navLinks.map((link, index) => (
+            <a
+              href={link.href}
+              key={index}
+              className="mx-4 text-gray-300 hover:text-[#E85D5D]"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
 
-    const handleMobileMenuAnimationEnd = () => {
-        if (!isMobileMenuOpen) {
-            setIsMobileMenuVisible(false)
-        }
-    }
+        {/* CTA Button */}
+        <Button size="sm" className="md:block hidden">
+          Contact Me
+        </Button>
 
-    return (
-        <header className=" text-white p-4 fixed w-full top-0 z-10">
-            <nav className="container items-center flex justify-between">
-                <a href="#" className="w-14 hover:rotate-360 transition-transform duration-600"><img src="/src/assets/m.png" alt="Logo" className="w-full"/></a>
+        {/* Mobile Nav Button */}
+        <button
+          className="block md:hidden hover:cursor-pointer"
+          onClick={toggleMobileMenu}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </nav>
 
-                <div className="mx-auto glass rounded-4xl px-6 py-3 hidden items-center md:flex">
-                    {navLinks.map((link, index) => (
-                        <a href={link.href} key={index} className="mx-4 text-gray-300 hover:text-[#E85D5D]">{link.label}</a>
-                    ))}
-                </div>
+      {isMobileMenuVisible && (
+        <div
+          className={`mx-auto glass px-6 py-3 flex flex-col md:hidden mt-5 ${isMobileMenuOpen ? "animate-fadeIn" : "animate-fadeOut"}`}
+          onAnimationEnd={handleMobileMenuAnimationEnd}
+        >
+          {navLinks.map((link, index) => (
+            <a
+              href={link.href}
+              key={index}
+              className="mx-4 my-1.5 text-gray-300 hover:text-[#E85D5D]"
+              onClick={closeMobileMenu}
+            >
+              {link.label}
+            </a>
+          ))}
 
-                {/* CTA Button */}
-                <Button size="sm" className="md:block hidden">Contact Me</Button>
+          <Button size="sm" className="block md:hidden mt-4 mb-2">
+            Contact Me
+          </Button>
+        </div>
+      )}
+    </header>
+  );
+};
 
-                {/* Mobile Nav Button */}
-                <button className="block md:hidden hover:cursor-pointer" onClick={toggleMobileMenu}>
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-            </nav>
-            
-            {isMobileMenuVisible && (
-                <div
-                    className={`mx-auto glass px-6 py-3 flex flex-col md:hidden mt-5 ${isMobileMenuOpen ? "animate-fadeIn" : "animate-fadeOut"}`}
-                    onAnimationEnd={handleMobileMenuAnimationEnd}
-                >
-                    {navLinks.map((link, index) => (
-                        <a
-                            href={link.href}
-                            key={index}
-                            className="mx-4 my-1.5 text-gray-300 hover:text-[#E85D5D]"
-                            onClick={closeMobileMenu}
-                        >
-                            {link.label}
-                        </a>
-                    ))}
-
-                    <Button size="sm" className="block md:hidden mt-4 mb-2">Contact Me</Button>
-                </div>
-            )}
-        </header>
-    )
-}
-
-export default Navbar
+export default Navbar;
