@@ -9,6 +9,22 @@ import {
 import Button from "../components/Buttons";
 import AnimatedBorderButton from "../components/AnimatedBorderButton";
 
+const skills = [
+  "HTML",
+  "CSS",
+  "Tailwind CSS",
+  "JavaScript",
+  "React",
+  "Node.js",
+  "Python",
+  "Machine Learning",
+  "Github",
+  "AWS",
+  "Vercel",
+  "Figma",
+  "Git",
+];
+
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -78,24 +94,53 @@ const Hero = () => {
 
             {/* Social Links */}
             <div className="flex items-center gap-4 animate-fadeIn animation-delay-1200">
-              <span className="text-gray-300 text-sm">Follow: </span>
+              <span className="text-gray-300 text-sm">Follow Me: </span>
               {[
-                { icon: Github, href: "https://github.com/MariusOdediran" },
+                { icon: Github, href: "https://github.com/Marius-Diran" },
                 { icon: Twitter, href: "https://x.com/Marius_Odediran" },
                 {
                   icon: Linkedin,
                   href: "https://www.linkedin.com/in/marius-odediran-94795b235/",
                 },
               ].map((social, idx) => (
-                <a key={idx} href={social.href}>
-                  {<social.icon />}
+                <a
+                  key={idx}
+                  href={social.href}
+                  target="_blank"
+                  className="p-2 rounded-full glass hover:bg-red-500/10 hover:text-red-400 transition-all duration-300"
+                >
+                  {<social.icon className="w-5 h-5" />}
                 </a>
               ))}
             </div>
           </div>
 
           {/* Right Column - Image */}
-          <div></div>
+          <div className="relative animate-fadeIn animation-delay-300">
+            <div className="relative max-w-md mx-auto">
+              <div className="relative glass rounded-3xl glow-border">
+                <img
+                  src="/Profile-Photo.png"
+                  alt="Marius Odediran"
+                  className="w-full aspect-4/5 object-cover rounded-2xl"
+                />
+
+                {/* Floating Badge */}
+                <div className="absolute -bottom-4 -right-2 glass rounded-xl px-3 py-1 flex items-center gap-2 animate-float animate-fadeIn animation-delay-500">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-sm font-medium">
+                    Available for Work
+                  </span>
+                </div>
+
+                {/* Stat Badge */}
+                <div className="absolute -top-4 -left-4 glass rounded-xl px-3 py-2 animate-float animation-delay-500">
+                  <div className="text-red-500 font-bold text-2xl">5+</div>
+                  <div className="text-sm text-gray-300">Years Exp.</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

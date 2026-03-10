@@ -8,19 +8,25 @@ body {
   background-color: black;
 }
 
-.glass {
-  background-color: color-mix(in srgb, #1a2329 65%, transparent);
-  backdrop-filter: blur(28px) saturate(140%);
-  -webkit-backdrop-filter: blur(28px) saturate(140%);
-  border: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
-  box-shadow: 0 8px 30px color-mix(in srgb, #000000 45%, transparent);
-}
-
-.glow-text {
-  text-shadow: 0 0 30px color-mix(in srgb, #f81717 80%, transparent);
-}
-
 @layer utilities {
+  .glass {
+    background-color: color-mix(in srgb, #1a2329 65%, transparent);
+    backdrop-filter: blur(28px) saturate(140%);
+    -webkit-backdrop-filter: blur(28px) saturate(140%);
+    border: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
+    box-shadow: 0 8px 30px color-mix(in srgb, #000000 45%, transparent);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 30px color-mix(in srgb, #f81717 80%, transparent);
+  }
+
+  .glow-border {
+    box-shadow:
+      0 0 20px color-mix(in srgb, #f81717 20%, transparent),
+      inset 0 0 10px color-mix(in srgb, #f81717 5%, transparent);
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -63,6 +69,16 @@ body {
     }
   }
 
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
   .animate-fadeIn {
     animation: fadeIn 0.5s ease-out both;
   }
@@ -70,6 +86,10 @@ body {
   .animate-fadeOut {
     animation: fadeOut 0.35s ease-in both;
   }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
 
 .animation-delay-100 {
