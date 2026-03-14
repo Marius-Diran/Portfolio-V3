@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  ChevronDown,
   Github,
   Linkedin,
   Twitter,
@@ -27,7 +28,7 @@ const skills = [
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -55,7 +56,7 @@ const Hero = () => {
       </div>
 
       {/* Contents */}
-      <div className="container mx-auto pt-30 text-white relative z-10">
+      <div className="container mx-auto pt-50 text-white relative">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Left Column - Text Content */}
           <div className="space-y-8">
@@ -141,6 +142,34 @@ const Hero = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Skills Section */}
+        <div className="text-white mt-20 animate-fadeIn animation-delay-600">
+          <p className="text-gray-300 text-sm text-center mb-6">
+            Technologies I Work With
+          </p>
+          <div className="relative overflow-hidden">
+            <div className="flex animate-marquee">
+              {[...skills, ...skills].map((skill, idx) => (
+                <div key={idx} className="shrink-0 px-8 py-4">
+                  <span className="text-gray-400/70 font-semibold">
+                    {skill}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center mt-6 animate-fadeIn animation-delay-800">
+          <a
+            href="#about"
+            className="flex flex-col items-center gap-2 text-gray-300 hover:text-white transition-colors"
+          >
+            <span>Scroll</span>
+            <ChevronDown className="w-5 h-5 animate-bounce" />
+          </a>
         </div>
       </div>
     </section>
