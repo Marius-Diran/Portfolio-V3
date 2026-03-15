@@ -36,6 +36,7 @@ const Hero = () => {
           alt="Hero Background"
           className="w-full h-full object-cover opacity-40"
         />
+        <div className="absolute inset-0 bg-linear-to-b from-[#0f1418]/20 via-[#0f1418]/80 to-[#0f1418]" />
       </div>
 
       {/* Red Dots */}
@@ -56,19 +57,19 @@ const Hero = () => {
       </div>
 
       {/* Contents */}
-      <div className="container mx-auto pt-50 text-white relative">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
+      <div className="container mx-auto pt-40 px-6 text-white relative max-md:container">
+        <div className="flex max-md:flex-col gap-8 items-center">
           {/* Left Column - Text Content */}
-          <div className="space-y-8">
-            <span className="inline-flex items-center gap-2 text-sm uppercase tracking-wide px-4 py-2 rounded-full glass text-[#F87171] animate-fadeIn animation-delay-200">
+          <div className="space-y-8 flex-1">
+            <span className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full glass text-[#F87171] animate-fadeIn animation-delay-200">
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
               Software Engineer × LLM Engineer • Problem Solver
-              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse max-md:hidden" />
             </span>
 
             {/* HeadLine */}
             <div className="space-y-4">
-              <h1 className="text-4xl font-bold leading-tight animate-fadeIn animation-delay-400">
+              <h1 className="text-7xl font-bold leading-tight animate-fadeIn animation-delay-400 max-md:text-5xl">
                 Building{" "}
                 <span className="text-[#F87171] glow-text">Intelligent</span>
                 <br />
@@ -78,7 +79,7 @@ const Hero = () => {
                   precision and purpose
                 </span>
               </h1>
-              <p className="text-lg text-gray-300 animate-fadeIn animation-delay-800">
+              <p className="text-lg text-gray-400 animate-fadeIn animation-delay-800 max-md:text-base">
                 Hi, I'm Marius Odediran — a Software/LLM Engineer specializing
                 in React, Node.js, and Machine Learning. I love creating
                 innovative solutions that bridge the gap between technology and
@@ -108,7 +109,7 @@ const Hero = () => {
                   key={idx}
                   href={social.href}
                   target="_blank"
-                  className="p-2 rounded-full glass hover:bg-red-500/10 hover:text-red-400 transition-all duration-300"
+                  className="p-2 rounded-full glass hover:bg-red-500/60 hover:text-red-400 transition-all duration-300"
                 >
                   {<social.icon className="w-5 h-5" />}
                 </a>
@@ -117,9 +118,15 @@ const Hero = () => {
           </div>
 
           {/* Right Column - Image */}
-          <div className="relative animate-fadeIn animation-delay-300">
+          <div className="flex-1 relative animate-fadeIn animation-delay-300">
             <div className="relative max-w-md mx-auto">
-              <div className="relative glass rounded-3xl glow-border">
+              <div
+                className="absolute inset-0
+              rounded-3xl bg-linear-to-br
+              from-red-400/30 via-transparent
+              to-red-400/10 blur-2xl animate-pulse"
+              />
+              <div className="relative glass rounded-3xl glow-border p-3">
                 <img
                   src="/Profile-Photo.png"
                   alt="Marius Odediran"
@@ -165,10 +172,10 @@ const Hero = () => {
         <div className="flex items-center justify-center mt-6 animate-fadeIn animation-delay-800">
           <a
             href="#about"
-            className="flex flex-col items-center gap-2 text-gray-300 hover:text-white transition-colors"
+            className="flex flex-col items-center gap-2 text-gray-500"
           >
             <span>Scroll</span>
-            <ChevronDown className="w-5 h-5 animate-bounce" />
+            <ChevronDown className="w-7 h-7 animate-bounce" />
           </a>
         </div>
       </div>
