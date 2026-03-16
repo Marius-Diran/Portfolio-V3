@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../components/Buttons";
 import { Menu, X } from "lucide-react";
+import logo from "../assets/M.png";
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -59,7 +60,7 @@ const Navbar = () => {
           href="#"
           className="w-14 hover:rotate-360 transition-transform duration-600"
         >
-          <img src="/src/assets/m.png" alt="Logo" className="w-full" />
+          <img src={logo} alt="Logo" className="w-full" />
         </a>
 
         <div className="mx-auto glass rounded-4xl px-6 py-3 hidden items-center md:flex">

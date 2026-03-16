@@ -84,7 +84,7 @@ const Hero = () => {
                 systems with
                 <br />
                 <span className="font-serif italic font-normal text-white">
-                  precision and purpose
+                  precision and purpose.
                 </span>
               </h1>
               <p className="text-lg text-gray-400 animate-fadeIn animation-delay-800 max-sm:text-base">
