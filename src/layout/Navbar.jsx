@@ -52,7 +52,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`text-white p-4 fixed w-full top-0 z-50 transition-colors duration-300 ${isScrolled ? "bg-[#1a2329]/80 backdrop-blur-sm" : "bg-transparent"}`}
+      className={`text-white p-4 fixed w-full top-0 z-50 transition-colors duration-1000 ${isScrolled ? "glass" : "bg-transparent"}`}
     >
       <nav className="container items-center flex justify-between">
         <a

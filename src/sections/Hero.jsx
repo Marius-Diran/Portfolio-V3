@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Button from "../components/Buttons";
 import AnimatedBorderButton from "../components/AnimatedBorderButton";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 const skills = [
   "HTML",
@@ -27,8 +28,13 @@ const skills = [
 ];
 
 const Hero = () => {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
+    <section
+      className={`relative min-h-screen flex items-center justify-center overflow-hidden z-10 ${isVisible ? "visible" : "invisible"}`}
+      ref={ref}
+    >
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -57,19 +63,21 @@ const Hero = () => {
       </div>
 
       {/* Contents */}
-      <div className="container mx-auto pt-40 px-6 text-white relative max-md:container">
-        <div className="flex max-md:flex-col gap-8 items-center">
+      <div className="container mx-auto pt-40 px-6 text-white relative">
+        <div
+          className={`flex max-sm:flex-col gap-8 items-center scroll-fade-in ${isVisible ? "visible" : ""}`}
+        >
           {/* Left Column - Text Content */}
           <div className="space-y-8 flex-1">
             <span className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full glass text-[#F87171] animate-fadeIn animation-delay-200">
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
               Software Engineer × LLM Engineer • Problem Solver
-              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse max-md:hidden" />
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse max-sm:hidden" />
             </span>
 
             {/* HeadLine */}
             <div className="space-y-4">
-              <h1 className="text-7xl font-bold leading-tight animate-fadeIn animation-delay-400 max-md:text-5xl">
+              <h1 className="text-7xl font-bold leading-tight animate-fadeIn animation-delay-400 max-sm:text-5xl">
                 Building{" "}
                 <span className="text-[#F87171] glow-text">Intelligent</span>
                 <br />
@@ -79,7 +87,7 @@ const Hero = () => {
                   precision and purpose
                 </span>
               </h1>
-              <p className="text-lg text-gray-400 animate-fadeIn animation-delay-800 max-md:text-base">
+              <p className="text-lg text-gray-400 animate-fadeIn animation-delay-800 max-sm:text-base">
                 Hi, I'm Marius Odediran — a Software/LLM Engineer specializing
                 in React, Node.js, and Machine Learning. I love creating
                 innovative solutions that bridge the gap between technology and
