@@ -1,12 +1,15 @@
+import { useState } from "react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import { motion } from "motion/react";
+import AnimatedBorderButton from "../components/AnimatedBorderButton";
 
 const projects = [
   {
-    title: "Milo - AI-Powered Personal Assistant",
+    title: "Milo - AI-Assistant",
     description:
       "An intelligent assistant that helps users manage their tasks, schedule, and information using natural language processing and machine learning.",
-    tags: ["React", "Tailwind CSS", "Node.js", "Machine Learning"],
+    tags: ["React", "Tailwind CSS", "Node.js", "LLMs"],
     image: "/Milo-Preview.png",
     link: "https://milo-beryl.vercel.app/",
     github: "https://github.com/Marius-Diran/Milo",
@@ -15,7 +18,7 @@ const projects = [
     title: "Heartnote - AI-Powered Love Letter Generator",
     description:
       "An AI-powered tool that generates personalized love letters based on user input, using natural language processing and machine learning to create heartfelt messages.",
-    tags: ["React", "Tailwind CSS", "Node.js", "Machine Learning"],
+    tags: ["React", "Tailwind CSS", "Node.js", "LLMs"],
     image: "/AI-Val-writer.png",
     link: "https://val-project-olive.vercel.app/",
     github: "https://github.com/Marius-Diran/Val-Project",
@@ -44,8 +47,14 @@ const Projects = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="projects" className="container mt-60 mx-auto px-6" ref={ref}>
-      <div className="space-y-20">
+    <section
+      id="projects"
+      className="container mt-60 mx-auto px-6 overflow-hidden"
+      ref={ref}
+    >
+      <div
+        className={`space-y-10 scroll-fade-in ${isVisible ? "visible" : ""}`}
+      >
         <div className="text-center">
           <p className="text-[#F87171] font-bold text-lg">Featured Work</p>
           <h1 className="text-[#F87171] text-5xl font-bold mt-2 leading-tight animate-fadeIn animation-delay-200">
@@ -70,18 +79,73 @@ const Projects = () => {
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="relative overflow-hidden aspect-video"
+                  whileTap={{ scale: 2 }}
+                  className="relative overflow-hidden aspect-video rounded-2xl transition-all duration-300"
                 >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700"
+                    className="w-full h-full object-cover rounded-2xl transition-transform duration-700"
                   />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#141a1f] via-[#141a1f]/50 to-transparent opacity-60" />
+                  {/* Overlay Links */}
+                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    <a
+                      className="glass-red p-2 rounded-full transition-all text-white hover:text-[#F87171] max-sm:hidden"
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ArrowUpRight />
+                    </a>
+                    <a
+                      className="glass-red p-2 rounded-full transition-all text-white hover:text-[#F87171] max-sm:hidden"
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Github />
+                    </a>
+                  </div>
                 </motion.div>
+
+                {/* Contents */}
+                <div className="space-y-4 p-6 mt-6">
+                  <div className="flex items-start justify-between text-white font-semibold hover:text-[#F87171] transition-colors duration-300">
+                    <h2>{project.title}</h2>
+                    <a
+                      className="hover:cursor-pointer glass p-1 rounded-full"
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ArrowUpRight />
+                    </a>
+                  </div>
+                  <p className="text-gray-400 text-sm">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag, tagidx) => {
+                      return (
+                        <span
+                          key={tagidx}
+                          className="text-gray-400 glass-dark rounded-full px-4 py-1.5 text-xs mr-2 hover:bg-[#e85d5d]/40 hover:text-[#F87171] max-sm:active:bg-[#e85d5d] max-sm:active:text-[#F87171] transition-all duration-300"
+                        >
+                          {tag}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             );
           })}
+        </div>
+
+        <div className="flex items-center justify-center p-4">
+          <AnimatedBorderButton>
+            <a href="">View Projects</a>
+            <ArrowUpRight />
+          </AnimatedBorderButton>
         </div>
       </div>
     </section>

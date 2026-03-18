@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   ChevronDown,
+  Download,
   Github,
   Linkedin,
   Twitter,
@@ -99,7 +100,10 @@ const Hero = () => {
               <Button size="lg">
                 Contact Me <ArrowRight className="w-5 h-5" />
               </Button>
-              <AnimatedBorderButton>Download CV</AnimatedBorderButton>
+              <AnimatedBorderButton>
+                Download CV
+                <Download />
+              </AnimatedBorderButton>
             </div>
 
             {/* Social Links */}
@@ -117,7 +121,7 @@ const Hero = () => {
                   key={idx}
                   href={social.href}
                   target="_blank"
-                  className="p-2 rounded-full glass hover:bg-red-500/60 hover:text-red-400 transition-all duration-300"
+                  className="p-2 rounded-full glass hover:bg-red-500/60 hover:text-red-400 transition-all duration-300 max-sm:active:bg-red-500/60 max-sm:active:text-red-400"
                 >
                   {<social.icon className="w-5 h-5" />}
                 </a>
@@ -151,7 +155,7 @@ const Hero = () => {
 
                 {/* Stat Badge */}
                 <div className="absolute -top-4 -left-4 glass rounded-xl px-3 py-2 animate-float animation-delay-500">
-                  <div className="text-red-500 font-bold text-2xl">5+</div>
+                  <div className="text-red-500 font-bold text-2xl">2+</div>
                   <div className="text-sm text-gray-300">Years Exp.</div>
                 </div>
               </div>
@@ -167,8 +171,11 @@ const Hero = () => {
           <div className="relative overflow-hidden">
             <div className="flex animate-marquee">
               {[...skills, ...skills].map((skill, idx) => (
-                <div key={idx} className="shrink-0 px-8 py-4">
-                  <span className="text-gray-400/70 font-semibold">
+                <div
+                  key={idx}
+                  className="shrink-0 px-8 py-4 max-sm:px-4 max-sm:py-2"
+                >
+                  <span className="text-gray-400/70 font-semibold max-sm:text-sm">
                     {skill}
                   </span>
                 </div>
