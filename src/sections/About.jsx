@@ -49,30 +49,33 @@ const About = () => {
           </h1>
           <div className="space-y-4 text-gray-400 animate-fadeIn animation-delay-400">
             <p>
-              I'm a software engineer with 5+ years of experience building
-              intelligent, user-focused digital products. My passion for solving
-              real problems through elegant code has driven me from curious web
-              developer to full-stack engineer.
+              I'm a software engineer with 2+ years of professional experience
+              designing and developing digital products. I'm passionate about
+              writing clean, maintainable code and translating complex
+              requirements into elegant solutions that deliver real value.
             </p>
             <p>
-              I specialize in React, Next.js, and TypeScript, with expertise
-              spanning Node.js, Python, and Machine Learning. I believe great
-              engineering is invisible—users only see the result, not the
-              complexity behind it.
+              I specialize in React, Next.js, and TypeScript for frontend
+              development, with strong expertise in Node.js and Python for
+              backend systems. I'm actively developing skills in LLM engineering
+              to build more intelligent and responsive applications. I focus on
+              creating architectures that scale, perform efficiently, and solve
+              meaningful problems.
             </p>
             <p>
-              Beyond writing code, I'm committed to continuous learning,
-              contributing to open-source, and sharing knowledge with the
-              developer community. Every project is an opportunity to build
-              something meaningful.
+              I'm committed to continuous professional growth through exploring
+              emerging technologies, contributing to open-source projects, and
+              collaborating with experienced developers. I believe that great
+              engineering requires curiosity, attention to detail, and a
+              willingness to learn from others.
             </p>
           </div>
 
           <div className="p-6 glass rounded-lg glow-border animate-fadeIn animation-delay-600">
             <p className="text-white text-lg font-medium italic">
-              “My mission is to build digital products that are not only
-              functional, but intelligent — experiences that feel seamless for
-              users and powerful for developers.”
+              “My goal is to create intelligent systems that are easy to use,
+              not just powerful to build. Good engineering should be
+              invisible—users should feel delighted, not overwhelmed”
             </p>
           </div>
         </div>

@@ -52,7 +52,7 @@ const Experience = () => {
         className={`space-y-10 scroll-fade-in ${isVisible ? "visible" : ""}`}
       >
         <div className="space-y-3">
-          <h2 className="text-[#F87171] font-medium text-lg max-sm:text-base animate-fadeIn animation-delay-200">
+          <h2 className="text-[#F87171] font-medium text-lg max-sm:text-base animate-fadeIn animation-delay-200 uppercase">
             Career Journey
           </h2>
           <h1 className="text-[#F87171] text-5xl font-semibold max-sm:text-4xl animate-fadeIn animation-delay-400">

@@ -6,26 +6,23 @@ const testimonials = [
   {
     quote:
       "Marius is one of the most talented engineers I've worked with. His attention to detail and ability to translate complex requirements into elegant solutions is remarkable.",
-    author: "Sarah Chen",
-    role: "CTO, Tech Innovators Inc.",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+    author: "Daniel Odediran",
+    role: "CEO, Covalent.",
+    avatar: "/DAN.jpg",
   },
   {
     quote:
       "Working with Marius was a game-changer for our project. He delivered ahead of schedule with code quality that set a new standard for our team.",
     author: "Michael Rodriguez",
-    role: "Product Manager, Digital Solutions",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
+    role: "Product Manager, Akure Tech Hub.",
+    avatar: "/ATH.jpg",
   },
   {
     quote:
       "At CCHub, Marius developed a strong foundation in embedded systems and Arduino. His ability to connect hardware concepts with software logic demonstrates the kind of full-stack thinking that makes a great engineer.",
-    author: "David Kim",
-    role: "Engineering Lead, CCHub",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+    author: "Adebukunola Omotoso",
+    role: "STEM Educator, STEMcafe.",
+    avatar: "/Adebukunola.jpg",
   },
   {
     quote:
@@ -57,9 +54,11 @@ const Testimonials = () => {
       className="text-white mt-60 px-6 overflow-hidden"
       ref={ref}
     >
-      <div className={`container mx-auto scroll-fade-in ${isVisible ? "visible" : ""}`}>
+      <div
+        className={`container mx-auto scroll-fade-in ${isVisible ? "visible" : ""}`}
+      >
         <div className="space-y-5">
-          <h2 className="text-[#F87171] text-center font-semibold animate-fadeIn animation-delay-200">
+          <h2 className="text-[#F87171] text-center font-semibold animate-fadeIn animation-delay-200 uppercase">
             What people say
           </h2>
           <h1 className="text-center text-[#F87171] text-5xl font-bold animate-fadeIn animation-delay-400">

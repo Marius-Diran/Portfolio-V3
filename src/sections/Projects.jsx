@@ -8,7 +8,7 @@ const projects = [
   {
     title: "Milo - AI-Assistant",
     description:
-      "An intelligent assistant that helps users manage their tasks, schedule, and information using natural language processing and machine learning.",
+      "An intelligent task management assistant powered by LLMs. Seamlessly integrates context understanding and intelligent suggestions to enhance productivity and organization.",
     tags: ["React", "Tailwind CSS", "Node.js", "LLMs"],
     image: "/Milo-Preview.png",
     link: "https://milo-beryl.vercel.app/",
@@ -17,7 +17,7 @@ const projects = [
   {
     title: "Heartnote - AI-Powered Love Letter Generator",
     description:
-      "An AI-powered tool that generates personalized love letters based on user input, using natural language processing and machine learning to create heartfelt messages.",
+      "An AI-powered love letter generator leveraging LLMs to create personalized, emotionally resonant messages. Demonstrates advanced prompt engineering and natural language processing capabilities.",
     tags: ["React", "Tailwind CSS", "Node.js", "LLMs"],
     image: "/AI-Val-writer.png",
     link: "https://val-project-olive.vercel.app/",
@@ -26,7 +26,7 @@ const projects = [
   {
     title: "Weather App",
     description:
-      "A simple yet elegant weather application that provides real-time forecasts and detailed information for any location.",
+      "A weather application providing real-time forecasts with clean, intuitive interface design. Built with performance optimization and responsive design principles.",
     tags: ["Html", "Tailwind CSS", "JavaScript", "OpenWeather API"],
     image: "/Weather-Preview.png",
     link: "https://mariusweatherappv1.netlify.app/",
@@ -35,7 +35,7 @@ const projects = [
   {
     title: "Easybank Landing Page",
     description:
-      "Take your financial life online. Your Easybank account will be a one-stop-shop for spending, saving, budgeting, investing, and much more.",
+      "A responsive landing page for a fintech platform. Designed to communicate value proposition clearly while maintaining exceptional user experience and accessibility standards.",
     tags: ["Html", "Tailwind CSS", "JavaScript"],
     image: "/Bookmark-Preview.png",
     link: "https://taupe-pithivier-e7e77b.netlify.app/",
@@ -56,7 +56,7 @@ const Projects = () => {
         className={`space-y-10 scroll-fade-in ${isVisible ? "visible" : ""}`}
       >
         <div className="text-center">
-          <p className="text-[#F87171] font-bold text-lg animate-fadeIn animation-delay-200">
+          <p className="text-[#F87171] font-bold text-lg animate-fadeIn animation-delay-200 uppercase">
             Featured Work
           </p>
           <h1 className="text-[#F87171] text-5xl font-bold mt-2 leading-tight animate-fadeIn animation-delay-400">

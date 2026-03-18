@@ -20,7 +20,7 @@ const skills = [
   "React",
   "Node.js",
   "Python",
-  "Machine Learning",
+  "LLM Engineering",
   "Github",
   "AWS",
   "Vercel",
@@ -72,7 +72,7 @@ const Hero = () => {
           <div className="space-y-8 flex-1">
             <span className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full glass text-[#F87171] animate-fadeIn animation-delay-200">
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-              Software Engineer × LLM Engineer • Problem Solver
+              Software Engineer • Problem Solver
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse max-sm:hidden" />
             </span>
 
@@ -89,10 +89,11 @@ const Hero = () => {
                 </span>
               </h1>
               <p className="text-lg text-gray-400 animate-fadeIn animation-delay-800 max-sm:text-base">
-                Hi, I'm Marius Odediran — a Software/LLM Engineer specializing
-                in React, Node.js, and Machine Learning. I love creating
-                innovative solutions that bridge the gap between technology and
-                user experience.
+                Hi, I'm Marius Odediran — a Software Engineer specializing in
+                React and Node.js. I'm dedicated to building intelligent systems
+                through LLM engineering and creating seamless user experiences.
+                I'm passionate about solving complex problems with elegant,
+                scalable solutions.
               </p>
             </div>
             {/* CTA Buttons */}

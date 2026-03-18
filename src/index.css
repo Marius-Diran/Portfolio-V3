@@ -238,6 +238,10 @@
   animation: scrollFadeIn 0.8s ease-out forwards;
 }
 
+.scroll-fade-in:not(.visible) {
+  animation: fadeOut 0.8s ease-out forwards;
+}
+
 .animation-delay-100 {
   animation-delay: 100ms;
 }
