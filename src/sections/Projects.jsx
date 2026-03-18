@@ -56,7 +56,9 @@ const Projects = () => {
         className={`space-y-10 scroll-fade-in ${isVisible ? "visible" : ""}`}
       >
         <div className="text-center">
-          <p className="text-[#F87171] font-bold text-lg animate-fadeIn animation-delay-200">Featured Work</p>
+          <p className="text-[#F87171] font-bold text-lg animate-fadeIn animation-delay-200">
+            Featured Work
+          </p>
           <h1 className="text-[#F87171] text-5xl font-bold mt-2 leading-tight animate-fadeIn animation-delay-400">
             Projects that{" "}
             <span className="text-white font-normal font-serif italic">
@@ -79,9 +81,10 @@ const Projects = () => {
                 style={{ animationDelay: `${600 + (idx + 1) * 150}ms` }}
               >
                 <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 2 }}
-                  className="relative overflow-hidden aspect-video rounded-2xl transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="relative overflow-hidden aspect-video rounded-2xl"
                 >
                   <img
                     src={project.image}
