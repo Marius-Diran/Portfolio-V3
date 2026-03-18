@@ -202,11 +202,11 @@
   }
 
   .animate-fadeIn {
-    animation: fadeIn 0.9s ease-in-out both;
+    animation: fadeIn 0.3s ease-in-out both;
   }
 
   .animate-fadeOut {
-    animation: fadeOut 0.7s ease-in-out both;
+    animation: fadeOut 0.3s ease-in-out both;
   }
 
   .animate-marquee {
