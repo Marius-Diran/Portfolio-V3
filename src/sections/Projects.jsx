@@ -56,14 +56,14 @@ const Projects = () => {
         className={`space-y-10 scroll-fade-in ${isVisible ? "visible" : ""}`}
       >
         <div className="text-center">
-          <p className="text-[#F87171] font-bold text-lg">Featured Work</p>
-          <h1 className="text-[#F87171] text-5xl font-bold mt-2 leading-tight animate-fadeIn animation-delay-200">
+          <p className="text-[#F87171] font-bold text-lg animate-fadeIn animation-delay-200">Featured Work</p>
+          <h1 className="text-[#F87171] text-5xl font-bold mt-2 leading-tight animate-fadeIn animation-delay-400">
             Projects that{" "}
             <span className="text-white font-normal font-serif italic">
               make an impact.
             </span>
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-400 animate-fadeIn animation-delay-600">
             A selection of my recent work, from complex web applications to
             innovative tools that solve real-world problems.
           </p>
@@ -75,7 +75,8 @@ const Projects = () => {
             return (
               <div
                 key={idx}
-                className="glass rounded-2xl overflow-hidden animate-fadeIn animation-delay-400"
+                className="glass rounded-2xl overflow-hidden animate-fadeIn"
+                style={{ animationDelay: `${600 + (idx + 1) * 150}ms` }}
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -141,7 +142,7 @@ const Projects = () => {
           })}
         </div>
 
-        <div className="flex items-center justify-center p-4">
+        <div className="flex items-center justify-center p-4 animate-fadeIn animation-delay-1000">
           <AnimatedBorderButton>
             <a href="">View Projects</a>
             <ArrowUpRight />
