@@ -76,9 +76,11 @@ const Navbar = () => {
         </div>
 
         {/* CTA Button */}
-        <Button size="sm" className="md:block hidden">
-          Contact Me
-        </Button>
+        <a href="#contact">
+          <Button size="sm" className="md:block hidden">
+            Contact Me
+          </Button>
+        </a>
 
         {/* Mobile Nav Button */}
         <button
@@ -105,9 +107,11 @@ const Navbar = () => {
             </a>
           ))}
 
-          <Button size="sm" className="block md:hidden mt-4 mb-2">
-            Contact Me
-          </Button>
+          <a href="#contact">
+            <Button size="sm" className="block md:hidden mt-4 mb-2">
+              Contact Me
+            </Button>
+          </a>
         </div>
       )}
     </header>
