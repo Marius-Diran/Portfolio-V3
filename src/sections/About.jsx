@@ -71,7 +71,10 @@ const About = () => {
             </p>
           </div>
 
-          <div className="p-6 glass rounded-lg glow-border animate-fadeIn animation-delay-600">
+          <div
+            className="p-6 glass rounded-lg glow-border animate-fadeIn animation-delay-600"
+            style={{ animationDelay: "300ms" }}
+          >
             <p className="text-white text-lg font-medium italic">
               “My goal is to create intelligent systems that are easy to use,
               not just powerful to build. Good engineering should be
@@ -88,7 +91,7 @@ const About = () => {
                 <div
                   className="glass p-6 rounded-2xl space-y-4 animate-fadeIn"
                   key={idx}
-                  style={{ animationDelay: `${(idx + 1) * 100}ms` }}
+                  style={{ animationDelay: `${(idx + 1) * 150}ms` }}
                 >
                   <div className="glass-red rounded-xl w-12 h-12 flex items-center justify-center">
                     <item.icon className="text-red-500 w-6 h-6" />

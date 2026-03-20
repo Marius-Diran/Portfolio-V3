@@ -52,16 +52,16 @@ const Experience = () => {
         className={`space-y-10 scroll-fade-in ${isVisible ? "visible" : ""}`}
       >
         <div className="space-y-3">
-          <h2 className="text-[#F87171] font-medium text-lg max-sm:text-base animate-fadeIn animation-delay-200 uppercase">
+          <h2 className="text-[#F87171] font-medium text-lg max-sm:text-base animate-fadeIn" style={{ animationDelay: '100ms' }} uppercase>
             Career Journey
           </h2>
-          <h1 className="text-[#F87171] text-5xl font-semibold max-sm:text-4xl animate-fadeIn animation-delay-400">
+          <h1 className="text-[#F87171] text-5xl font-semibold max-sm:text-4xl animate-fadeIn" style={{ animationDelay: '200ms' }}>
             Experience that{" "}
             <span className="text-white font-serif font-medium">
               defines me.
             </span>
           </h1>
-          <p className="text-gray-500 w-[50%] max-sm:w-full animate-fadeIn animation-delay-600">
+          <p className="text-gray-500 w-[50%] max-sm:w-full animate-fadeIn" style={{ animationDelay: '300ms' }}>
             A timeline of my professional growth, from curious beginner to
             senior engineer leading teams and building products at scale.
           </p>
@@ -78,12 +78,12 @@ const Experience = () => {
                 <div
                   key={idx}
                   className="relative animate-fadeIn"
-                  style={{ animationDelay: `${400 + (idx + 1) * 150}ms` }}
+                  style={{ animationDelay: `${300 + (idx + 1) * 100}ms` }}
                 >
                   {/* Timeline Dot */}
                   <div className="absolute left-1/2 max-sm:left-0 w-3 h-3 top-0 bg-[#F87171] rounded-full z-10 -translate-x-[35%] max-sm:-translate-x-[40%] ring-3 ring-[#0f1418]">
                     {exp.current && (
-                      <span className="absolute inset-0 rounded-full animate-ping bg-[#F87171] opacity-75" />
+                      <span className="absolute inset-0 rounded-full bg-[#F87171] opacity-75" style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
                     )}
                   </div>
                   {/* Timeline Contents */}

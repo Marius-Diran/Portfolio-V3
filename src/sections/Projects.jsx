@@ -45,6 +45,9 @@ const projects = [
 
 const Projects = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" && window.innerWidth <= 640
+  );
 
   return (
     <section
@@ -78,40 +81,51 @@ const Projects = () => {
               <div
                 key={idx}
                 className="glass rounded-2xl overflow-hidden animate-fadeIn"
-                style={{ animationDelay: `${600 + (idx + 1) * 150}ms` }}
+                style={{ animationDelay: `${600 + (idx + 1) * 100}ms` }}
               >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className="relative overflow-hidden aspect-video rounded-2xl"
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover rounded-2xl transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#141a1f] via-[#141a1f]/50 to-transparent opacity-60" />
-                  {/* Overlay Links */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <a
-                      className="glass-red p-2 rounded-full transition-all text-white hover:text-[#F87171] max-sm:hidden"
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ArrowUpRight />
-                    </a>
-                    <a
-                      className="glass-red p-2 rounded-full transition-all text-white hover:text-[#F87171] max-sm:hidden"
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Github />
-                    </a>
+                {isMobile ? (
+                  <div className="relative overflow-hidden aspect-video rounded-2xl">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-[#141a1f] via-[#141a1f]/50 to-transparent opacity-60" />
                   </div>
-                </motion.div>
+                ) : (
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className="relative overflow-hidden aspect-video rounded-2xl"
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover rounded-2xl transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-[#141a1f] via-[#141a1f]/50 to-transparent opacity-60" />
+                    {/* Overlay Links */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <a
+                        className="glass-red p-2 rounded-full transition-all text-white hover:text-[#F87171] max-sm:hidden"
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ArrowUpRight />
+                      </a>
+                      <a
+                        className="glass-red p-2 rounded-full transition-all text-white hover:text-[#F87171] max-sm:hidden"
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Github />
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
 
                 {/* Contents */}
                 <div className="space-y-4 p-6 mt-6">

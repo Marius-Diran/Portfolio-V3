@@ -58,10 +58,17 @@ const Testimonials = () => {
         className={`container mx-auto scroll-fade-in ${isVisible ? "visible" : ""}`}
       >
         <div className="space-y-5">
-          <h2 className="text-[#F87171] text-center font-semibold animate-fadeIn animation-delay-200 uppercase">
+          <h2
+            className="text-[#F87171] text-center font-semibold animate-fadeIn"
+            style={{ animationDelay: "100ms" }}
+            uppercase
+          >
             What people say
           </h2>
-          <h1 className="text-center text-[#F87171] text-5xl font-bold animate-fadeIn animation-delay-400">
+          <h1
+            className="text-center text-[#F87171] text-5xl font-bold animate-fadeIn"
+            style={{ animationDelay: "200ms" }}
+          >
             Kind words from{" "}
             <span className="text-white font-serif font-medium italic">
               amazing people
@@ -73,7 +80,10 @@ const Testimonials = () => {
         <div className="w-1/2 mx-auto max-sm:w-full mt-20">
           <div className="relative">
             {/* Main Testimonial */}
-            <div className="glass-border-red glow-border rounded-3xl p-12 max-sm:p-8 animate-fadeIn animation-delay-600">
+            <div
+              className="glass-border-red glow-border rounded-3xl p-12 max-sm:p-8 animate-fadeIn"
+              style={{ animationDelay: "300ms" }}
+            >
               <div className="absolute -top-5 left-8 w-10 h-10 glass-red rounded-full flex items-center justify-center">
                 <Quote />
               </div>
@@ -101,7 +111,10 @@ const Testimonials = () => {
           </div>
 
           {/* Testimonial Nav */}
-          <div className="flex items-center justify-center gap-4 mt-8 animate-fadeIn animation-delay-800">
+          <div
+            className="flex items-center justify-center gap-4 mt-8 animate-fadeIn"
+            style={{ animationDelay: "400ms" }}
+          >
             <button className="glass-dark rounded-full p-3" onClick={previous}>
               <ChevronLeft />
             </button>

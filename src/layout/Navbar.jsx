@@ -63,7 +63,7 @@ const Navbar = () => {
           <img src={logo} alt="Logo" className="w-full" />
         </a>
 
-        <div className="mx-auto glass rounded-4xl px-6 py-3 hidden items-center md:flex">
+        <div className="mx-auto glass rounded-4xl px-6 py-3 max-sm:hidden items-center flex">
           {navLinks.map((link, index) => (
             <a
               href={link.href}

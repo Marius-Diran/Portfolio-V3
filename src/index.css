@@ -144,12 +144,10 @@
     from {
       opacity: 0;
       transform: translateY(20px);
-      filter: blur(10px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
-      filter: blur(0);
     }
   }
 
@@ -157,12 +155,10 @@
     from {
       opacity: 1;
       transform: translateY(0);
-      filter: blur(0);
     }
     to {
       opacity: 0;
       transform: translateY(20px);
-      filter: blur(10px);
     }
   }
 
@@ -202,11 +198,23 @@
   }
 
   .animate-fadeIn {
-    animation: fadeIn 0.3s ease-in-out both;
+    animation: fadeIn 0.5s ease-out both;
+    will-change: opacity, transform;
   }
 
   .animate-fadeOut {
     animation: fadeOut 0.3s ease-in-out both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fadeIn,
+    .animate-fadeOut,
+    .animate-marquee,
+    .animate-float {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 
   .animate-marquee {
@@ -216,6 +224,13 @@
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
 }
 
 @keyframes scrollFadeIn {
@@ -235,11 +250,22 @@
 }
 
 .scroll-fade-in.visible {
-  animation: scrollFadeIn 0.8s ease-out forwards;
+  animation: scrollFadeIn 0.6s ease-out forwards;
+  will-change: opacity, transform;
 }
 
 .scroll-fade-in:not(.visible) {
-  animation: fadeOut 0.8s ease-out forwards;
+  animation: fadeOut 0.6s ease-out forwards;
+}
+
+@media (max-width: 640px) {
+  .scroll-fade-in.visible {
+    animation: scrollFadeIn 0.4s ease-out forwards;
+  }
+
+  .scroll-fade-in:not(.visible) {
+    animation: fadeOut 0.4s ease-out forwards;
+  }
 }
 
 .animation-delay-100 {
@@ -288,6 +314,15 @@
 
 .animation-delay-1200 {
   animation-delay: 1200ms;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes animated-border {

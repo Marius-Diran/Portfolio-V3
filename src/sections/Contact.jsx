@@ -2,12 +2,14 @@ import {
   Mail,
   Phone,
   MapPin,
-  Send,
   CheckCircle,
   AlertCircle,
   SendIcon,
 } from "lucide-react";
 import Button from "../components/Buttons";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 const contactInfo = [
   {
@@ -31,9 +33,73 @@ const contactInfo = [
 ];
 
 const Contact = () => {
+  const { ref, isVisible } = useScrollAnimation();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({
+    type: null,
+    message: "",
+  });
+
+  const submitHandle = async (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+    setSubmitStatus({ type: null, message: "" });
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error(
+          "EmailJS configuration is missing. Please check your environment variables.",
+        );
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        publicKey,
+      );
+
+      setSubmitStatus({
+        type: "success",
+        message: "Message sent successfully! I'll get back to you soon.",
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("EmailJS Error: ", err);
+      setSubmitStatus({
+        type: "error",
+        message:
+          "Failed to send message. Please try again later or contact me directly via email.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <section className="mt-60 relative text-white container mx-auto px-6">
-      <div className="relative">
+    <section
+      id="contact"
+      className="mt-60 relative text-white container mx-auto px-6"
+      ref={ref}
+    >
+      <div
+        className={`space-y-10 scroll-fade-in ${isVisible ? "visible" : ""}`}
+      >
         <div className="space-y-4 text-center">
           <h2 className="text-[#F87171] font-semibold uppercase">
             Get in Touch
@@ -54,8 +120,11 @@ const Contact = () => {
 
         <div className="mt-16 flex gap-12 mx-auto w-5xl max-sm:w-full max-sm:flex-col">
           {/* Contact Form */}
-          <div className="glass-border-red p-8 rounded-2xl animate-fadeIn animation-delay-600">
-            <form className="space-y-6">
+          <div
+            className="glass-border-red p-8 rounded-2xl animate-fadeIn"
+            style={{ animationDelay: "400ms" }}
+          >
+            <form className="space-y-6" onSubmit={submitHandle}>
               <div>
                 <label
                   htmlFor="name"
@@ -66,6 +135,10 @@ const Contact = () => {
                 <input
                   id="name"
                   type="text"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   required
                   placeholder="Your Name..."
                   className="w-full glass-dark px-4 py-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#F87171] autofill:shadow-[inset_0_0_0px_1000px_rgba(0,0,0,0.3)] autofill:text-white transistion-all"
@@ -82,6 +155,10 @@ const Contact = () => {
                 <input
                   id="email"
                   type="email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   required
                   placeholder="your@email.com"
                   className="w-full glass-dark px-4 py-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#F87171] autofill:shadow-[inset_0_0_0px_1000px_rgba(0,0,0,0.3)] autofill:text-white transistion-all"
@@ -101,18 +178,51 @@ const Contact = () => {
                   required
                   placeholder="Your Message..."
                   className="w-full glass-dark px-4 py-3 rounded-xl focus:outline-none focus:bg-transparent focus:border-[#F87171] focus:ring-1 focus:ring-[#F87171] autofill:shadow-[inset_0_0_0px_1000px_rgba(0,0,0,0.5)] autofill:text-white resize-none"
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                 />
 
-                <Button className="w-full mt-6" type="submit" size="lg">
-                  Send Message
-                  <SendIcon />
+                <Button
+                  className="w-full mt-6"
+                  type="submit"
+                  size="lg"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>Sending...</>
+                  ) : (
+                    <>
+                      Send Message
+                      <SendIcon className="w-5 h-5" />
+                    </>
+                  )}
                 </Button>
+
+                {submitStatus.type && (
+                  <div
+                    className={`flex items-center gap-3
+                    p-4 rounded-xl mt-4 ${
+                      submitStatus.type === "success"
+                        ? "bg-green-500/10 border border-green-500/20 text-green-400"
+                        : "bg-red-500/10 border border-red-500/20 text-red-400"
+                    }`}
+                  >
+                    {submitStatus.type === "success" ? (
+                      <CheckCircle className="w-5 h-5 shrink-0" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 shrink-0" />
+                    )}
+                    <p className="text-sm">{submitStatus.message}</p>
+                  </div>
+                )}
               </div>
             </form>
           </div>
 
           {/* Contact Info */}
-          <div className="animate-fadeIn animation-delay-800">
+          <div className="animate-fadeIn" style={{ animationDelay: "600ms" }}>
             <div className="space-y-4 max-sm:space-y-2 glass-border-red p-10 max-sm:p-2 rounded-2xl">
               {contactInfo.map((info, idx) => {
                 return (
@@ -129,16 +239,23 @@ const Contact = () => {
 
                     <div>
                       <div className="text-sm text-gray-400">{info.label}</div>
-                      <div className="text-lg">{info.value}</div>
+                      <div className="text-lg max-sm:text-base">
+                        {info.value}
+                      </div>
                     </div>
                   </a>
                 );
               })}
             </div>
 
-            <div className="mt-20 glass-border-red p-10 rounded-2xl space-y-2">
+            <div className="mt-8 glass-border-red p-10 rounded-2xl space-y-2">
               <div className="flex items-center gap-3 font-medium">
-                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                <span
+                  className="w-3 h-3 bg-green-500 rounded-full"
+                  style={{
+                    animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                  }}
+                />
                 <span>Currently Available</span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
