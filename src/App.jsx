@@ -1,14 +1,15 @@
 import { Analytics } from "@vercel/analytics/react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./layout/Navbar";
-import Hero from "./sections/Hero";
-import About from "./sections/About";
-import Projects from "./sections/Projects";
-import Experience from "./sections/Experience";
-import Testimonials from "./sections/Testimonials";
-import Contact from "./sections/Contact";
+import Hero from "./pages/Hero";
+import About from "./pages/About";
+import Projects from "./pages/Projects";
+import Experience from "./pages/Experience";
+import Testimonials from "./pages/Testimonials";
+import Contact from "./pages/Contact";
 import Footer from "./layout/Footer";
-import CV from "./sections/Cv";
+import CV from "./pages/Cv";
+import Chat from "./pages/Chat";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
           }
         />
         <Route path="/cv" element={<CV />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>
   );

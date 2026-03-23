@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Button from "../components/Buttons";
-import { Menu, X } from "lucide-react";
+import AiButton from "../components/Aibutton";
+import { Bot, Menu, X } from "lucide-react";
 import logo from "../assets/M.png";
+import { Link } from "react-router-dom";
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -59,6 +61,7 @@ const Navbar = () => {
         <a
           href="#"
           className="w-14 hover:rotate-360 transition-transform duration-300"
+          onClick={closeMobileMenu}
         >
           <img src={logo} alt="Logo" className="w-full" />
         </a>
@@ -76,11 +79,17 @@ const Navbar = () => {
         </div>
 
         {/* CTA Button */}
-        <a href="#contact">
-          <Button size="sm" className="md:block hidden">
-            Contact Me
-          </Button>
-        </a>
+        <div className="flex gap-5 items-center max-sm:hidden">
+          <a href="#contact">
+            <Button size="sm">Contact Me</Button>
+          </a>
+
+          <Link to="/chat">
+            <AiButton size="sm" className="px-5">
+              <Bot />
+            </AiButton>
+          </Link>
+        </div>
 
         {/* Mobile Nav Button */}
         <button
@@ -107,11 +116,19 @@ const Navbar = () => {
             </a>
           ))}
 
-          <a href="#contact">
-            <Button size="sm" className="block md:hidden mt-4 mb-2">
-              Contact Me
-            </Button>
-          </a>
+          <div className="flex flex-col gap-3 mt-4">
+            <a href="#contact">
+              <Button size="sm" onClick={closeMobileMenu}>
+                Contact Me
+              </Button>
+            </a>
+
+            <Link to="/chat" onClick={closeMobileMenu}>
+              <AiButton size="sm" className="px-11">
+                <Bot />
+              </AiButton>
+            </Link>
+          </div>
         </div>
       )}
     </header>
