@@ -1,0 +1,74 @@
+MARIUS ODEDIRAN
+Front-End Developer
+
+themariusodediran@gmail.com
++234 903 659 5403
+Lagos, Nigeria
+
+---
+
+EXPERIENCE
+
+AWS Cloud Trainee
+Akure Tech Hub · 2 Months
+
+— Gained hands-on experience with core AWS services including EC2, S3, and IAM.
+— Learned cloud architecture fundamentals and best practices for scalable deployments.
+— Explored cloud infrastructure relevant to modern frontend deployment pipelines.
+
+Physical Computing & Robotics Trainee
+Co-Creation Hub (CcHUB) · STEMcafe · Lagos
+
+— Studied physical computing principles and robotics at Nigeria's premier innovation hub.
+— Built hands-on projects bridging hardware and software, strengthening problem-solving skills.
+
+---
+
+PROJECTS
+
+Personal Portfolio V3
+Latest iteration of personal portfolio showcasing projects, skills, and contact. Built with a focus on clean UI and performance.
+mariusodediranv3.vercel.app
+
+Weather App
+Real-time weather application fetching live data from a weather API, displaying current conditions and forecasts with a clean interface.
+mariusweatherappv1.netlify.app
+
+Milo — AI Assistant
+An AI-powered conversational assistant with a clean chat interface. Integrates a language model API to handle real-time user queries and responses.
+milo-beryl.vercel.app
+
+Val Project — AI Love Notes
+An AI-powered love note generator that crafts personalised romantic messages, built with React and integrated with an AI language model API.
+val-project-olive.vercel.app
+
+---
+
+LINKS
+
+Portfolio: mariusodediranv3.vercel.app
+GitHub: github.com/Marius-Diran
+LinkedIn: in/marius-odediran
+
+---
+
+EDUCATION
+
+Federal University of Technology, Akure
+BSc — Computer Science
+Feb 2024 — Present
+
+---
+
+SKILLS
+
+Languages: HTML, CSS, JavaScript
+Frameworks: React, Node.js, Tailwind CSS
+Tools: Git, GitHub, Vercel, Netlify, AWS, Figma
+
+---
+
+LANGUAGES
+
+English: Fluent
+Yoruba: Native
