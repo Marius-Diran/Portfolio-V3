@@ -22,80 +22,112 @@ export const useChat = () => {
     localStorage.setItem("chatHistory", JSON.stringify(messages));
   }, [messages]);
 
-  const sendMessage = useCallback(async (userMessage) => {
-    if (!userMessage.trim()) return;
+  const sendMessage = useCallback(
+    async (userMessage) => {
+      if (!userMessage.trim()) return;
 
-    // Add user message to chat
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
-    setIsLoading(true);
-    setError(null);
+      setIsLoading(true);
+      setError(null);
 
-    try {
-      // Mock response for local testing
-      if (!import.meta.env.PROD) {
-        setTimeout(() => {
-          setMessages((prev) => [...prev, {
-            role: "assistant",
-            content: `Mock response: You said "${userMessage}". Deploy to Vercel to use real AI!`
-          }]);
-          setIsLoading(false);
-        }, 1000);
-        return;
-      }
+      try {
+        // Mock response for local testing
+        console.log("Mode check - PROD:", import.meta.env.PROD, "isDev:", !import.meta.env.PROD);
+        if (!import.meta.env.PROD) {
+          console.log("Using mock response");
+          setMessages((prev) => [
+            ...prev,
+            { role: "user", content: userMessage },
+          ]);
+          setTimeout(() => {
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "assistant",
+                content: `Mock response: You said "${userMessage}". Deploy to Vercel to use real AI!`,
+              },
+            ]);
+            setIsLoading(false);
+          }, 1000);
+          return;
+        }
 
-      // Add empty AI message placeholder
-      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+        console.log("Using production API");
 
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: userMessage,
-          history: messages // Send full conversation history
-        }),
-      });
+        // For production: Add user message and empty AI placeholder
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: userMessage },
+          { role: "assistant", content: "" },
+        ]);
 
-      if (!response.ok) throw new Error("Failed to get response");
+        console.log("Fetching /api/chat with:", { message: userMessage, historyLength: messages.length });
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: userMessage,
+            history: messages,
+          }),
+        });
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
+        console.log("API response status:", response.status);
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`API error ${response.status}: ${text}`);
+        }
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
 
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines[lines.length - 1];
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
 
-        for (let i = 0; i < lines.length - 1; i++) {
-          const line = lines[i];
-          if (line.startsWith("data: ")) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              if (data.done) {
-                setIsLoading(false);
-              } else if (data.content) {
-                // Update last AI message with streamed content
-                setMessages((prev) => {
-                  const updated = [...prev];
-                  updated[updated.length - 1].content += data.content;
-                  return updated;
-                });
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines[lines.length - 1];
+
+          for (let i = 0; i < lines.length - 1; i++) {
+            const line = lines[i];
+            if (line.startsWith("data: ")) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                if (data.done) {
+                  setIsLoading(false);
+                } else if (data.content) {
+                  setMessages((prev) => {
+                    const updated = [...prev];
+                    updated[updated.length - 1].content += data.content;
+                    return updated;
+                  });
+                }
+              } catch (e) {
+                console.error("Failed to parse SSE data:", e);
               }
-            } catch (e) {
-              console.error("Failed to parse SSE data:", e);
             }
           }
         }
+      } catch (err) {
+        const errMsg = err?.message || String(err) || "Unknown error";
+        console.error("❌ Chat error:", errMsg, err);
+        setError(errMsg);
+        setIsLoading(false);
+
+        // Only mark last message as error if it exists
+        setMessages((prev) => {
+          if (prev.length === 0) return prev;
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            ...updated[updated.length - 1],
+            isError: true,
+          };
+          return updated;
+        });
       }
-    } catch (err) {
-      setError(err.message);
-      console.error("Chat error:", err);
-      setIsLoading(false);
-    }
-  }, []);
+    },
+    [messages],
+  );
 
   const clearMessages = useCallback(() => {
     setMessages([]);

@@ -20,9 +20,20 @@ const Chat = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
   const messagesEndRef = useRef(null);
+  const scrollContainerRef = useRef(null);
 
+  // Smart scroll - only auto-scroll if user is near bottom
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const isNearBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight <
+      100;
+
+    if (isNearBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, isLoading]);
 
   useEffect(() => {
@@ -107,7 +118,10 @@ const Chat = () => {
           <div className="w-8 max-sm:w-7" />
         </div>
 
-        <div className="chat-scrollbar flex-1 overflow-y-auto flex flex-col bg-white dark:bg-gray-900">
+        <div
+          className="chat-scrollbar flex-1 overflow-y-auto flex flex-col bg-white dark:bg-gray-900"
+          ref={scrollContainerRef}
+        >
           {messages.length === 0 ? (
             <div className="flex-1 flex items-center justify-center text-center px-4 max-sm:px-3">
               <div>
@@ -121,9 +135,12 @@ const Chat = () => {
             </div>
           ) : (
             <div className="px-3 sm:px-6 max-sm:px-2.5 py-4 max-sm:py-3 space-y-3 max-sm:space-y-2 max-w-2xl w-full mx-auto">
-              {messages.map((msg, idx) => (
-                msg.content !== "" && <ChatMessage key={idx} message={msg} />
-              ))}
+              {messages.map(
+                (msg, idx) =>
+                  (msg.content !== "" || msg.isError) && (
+                    <ChatMessage key={idx} message={msg} />
+                  ),
+              )}
               {isLoading &&
                 messages.length > 0 &&
                 messages[messages.length - 1].content === "" && (
