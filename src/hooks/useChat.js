@@ -1,9 +1,26 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 export const useChat = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Load messages from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("chatHistory");
+    if (saved) {
+      try {
+        setMessages(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to load chat history:", e);
+      }
+    }
+  }, []);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("chatHistory", JSON.stringify(messages));
+  }, [messages]);
 
   const sendMessage = useCallback(async (userMessage) => {
     if (!userMessage.trim()) return;
@@ -83,6 +100,7 @@ export const useChat = () => {
   const clearMessages = useCallback(() => {
     setMessages([]);
     setError(null);
+    localStorage.removeItem("chatHistory");
   }, []);
 
   return {

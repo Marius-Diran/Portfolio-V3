@@ -41,23 +41,35 @@ export default async function handler(req, res) {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
-    // Query Upstash for relevant portfolio context
-    const queryResults = await index.query({
-      data: message,
-      topK: 5,
-      includeMetadata: true,
-    });
+    // Only query Upstash if the user asks about Marius or portfolio
+    let context = "";
+    const userMessage = message.toLowerCase();
+    const mariusKeywords = ["marius", "odediran"];
 
-    // Extract text from retrieved documents
-    const context = queryResults
-      .map((result) => result.metadata?.text || "")
-      .filter(Boolean)
-      .join("\n\n");
+    const isMariusQuestion = mariusKeywords.some((keyword) =>
+      userMessage.includes(keyword),
+    );
 
-    // Build system prompt with context
-    const systemPrompt = context
-      ? `You are Marius Odediran's AI assistant. Here's information about Marius to help you answer questions:\n\n${context}\n\nUse this information to provide accurate answers about Marius's experience, projects, skills, and background.`
-      : "You are Marius Odediran's AI assistant. Help answer questions about Marius professionally and helpfully.";
+    if (isMariusQuestion) {
+      // Only use RAG if user is asking about Marius
+      const queryResults = await index.query({
+        data: message,
+        topK: 5,
+        includeMetadata: true,
+      });
+
+      context = queryResults
+        .map((result) => result.metadata?.text || "")
+        .filter(Boolean)
+        .join("\n\n");
+    }
+
+    // Simple, neutral system prompt - just be helpful
+    let systemPrompt = `You are a helpful AI assistant. Answer questions accurately, thoroughly, and conversationally. Be friendly and engaged. Follow the user's lead and stay on topic.`;
+
+    if (context) {
+      systemPrompt += `\n\nYou also have access to information about Marius Odediran:\n\n${context}\n\nUse this information when answering questions about Marius.`;
+    }
 
     const model = new ChatOpenRouter({
       baseURL: "https://openrouter.ai/api/v1",
@@ -72,9 +84,9 @@ export default async function handler(req, res) {
         role: "system",
         content: systemPrompt,
       },
-      ...history.map(msg => ({
+      ...history.map((msg) => ({
         role: msg.role,
-        content: msg.content
+        content: msg.content,
       })),
       {
         role: "user",
