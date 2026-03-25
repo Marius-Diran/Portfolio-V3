@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = req.body;
+    const { message, history = [] } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: "Message is required" });
@@ -66,17 +66,24 @@ export default async function handler(req, res) {
       temperature: 0.7,
     });
 
-    // Use streaming with context-enriched prompt
-    const stream = await model.stream([
+    // Build messages array with full conversation history
+    const messages = [
       {
         role: "system",
         content: systemPrompt,
       },
+      ...history.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      })),
       {
         role: "user",
         content: message,
       },
-    ]);
+    ];
+
+    // Use streaming with context-enriched prompt and full conversation history
+    const stream = await model.stream(messages);
 
     let fullContent = "";
 

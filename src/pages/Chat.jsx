@@ -120,7 +120,7 @@ const Chat = () => {
               </div>
             </div>
           ) : (
-            <div className="px-3 sm:px-6 max-sm:px-2.5 py-4 max-sm:py-3 space-y-3 max-sm:space-y-2 max-w-4xl w-full mx-auto">
+            <div className="px-3 sm:px-6 max-sm:px-2.5 py-4 max-sm:py-3 space-y-3 max-sm:space-y-2 max-w-2xl w-full mx-auto">
               {messages.map((msg, idx) => (
                 msg.content !== "" && <ChatMessage key={idx} message={msg} />
               ))}

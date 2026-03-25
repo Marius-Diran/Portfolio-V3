@@ -27,7 +27,7 @@ export default function ChatMessage({ message }) {
 
       {/* Message Bubble */}
       <div
-        className={`px-3 max-sm:px-3 py-2 max-sm:py-2 rounded-2xl max-w-lg max-sm:max-w-[85%] transition-all duration-200 ${
+        className={`px-3 max-sm:px-3 py-2 max-sm:py-2 rounded-2xl max-w-none max-sm:max-w-[90%] transition-all duration-200 ${
           isAI
             ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-600"
             : "bg-linear-to-br from-blue-500 to-blue-600 text-white shadow-lg"

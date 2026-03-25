@@ -32,7 +32,10 @@ export const useChat = () => {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({
+          message: userMessage,
+          history: messages // Send full conversation history
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to get response");
