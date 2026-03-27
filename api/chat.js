@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { ChatOpenRouter } from "@langchain/openrouter";
 import { Index } from "@upstash/vector";
 
@@ -5,6 +8,33 @@ const index = new Index({
   url: process.env.UPSTASH_VECTOR_REST_URL,
   token: process.env.UPSTASH_VECTOR_REST_TOKEN,
 });
+
+function extractErrorMessage(error) {
+  const directMessage =
+    error?.message ||
+    error?.cause?.message ||
+    error?.response?.data?.error?.message ||
+    error?.response?.data?.message ||
+    error?.error?.message;
+
+  if (directMessage) return directMessage;
+
+  const responseData = error?.response?.data;
+  if (responseData) {
+    if (typeof responseData === "string") return responseData;
+    try {
+      return JSON.stringify(responseData);
+    } catch {
+      // Continue to fallback below.
+    }
+  }
+
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return "Failed to get response from AI";
+  }
+}
 
 export default async function handler(req, res) {
   // CORS headers
@@ -30,7 +60,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message, history = [] } = req.body;
+    const { message, history = [], model } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: "Message is required" });
@@ -71,11 +101,13 @@ export default async function handler(req, res) {
       systemPrompt += `\n\nYou also have access to information about Marius Odediran:\n\n${context}\n\nUse this information when answering questions about Marius.`;
     }
 
-    const model = new ChatOpenRouter({
-      baseURL: "https://openrouter.ai/api/v1",
+    const modelId = model || "nvidia/nemotron-3-super-120b-a12b:free";
+
+    const modelInstance = new ChatOpenRouter({
       apiKey: process.env.OPENROUTER_API_KEY,
-      model: "nvidia/nemotron-3-super-120b-a12b:free",
+      model: modelId,
       temperature: 0.7,
+      maxTokens: 2000,
     });
 
     // Build messages array with full conversation history
@@ -95,7 +127,7 @@ export default async function handler(req, res) {
     ];
 
     // Use streaming with context-enriched prompt and full conversation history
-    const stream = await model.stream(messages);
+    const stream = await modelInstance.stream(messages);
 
     let fullContent = "";
 
@@ -109,14 +141,30 @@ export default async function handler(req, res) {
 
     console.log("AI Response:", fullContent);
 
-    // Send final event
-    res.write(`data: ${JSON.stringify({ content: "", done: true })}\n\n`);
+    // Send final event with model info
+    res.write(
+      `data: ${JSON.stringify({ content: "", done: true, model: modelId })}\n\n`,
+    );
     res.end();
   } catch (error) {
-    console.error("Chat API error:", error);
-    res.write(
-      `data: ${JSON.stringify({ error: "Failed to get response from AI", done: true })}\n\n`,
-    );
+    const errorMessage = extractErrorMessage(error);
+
+    console.error("Chat API error:", errorMessage);
+    console.error("Full error stack:", error.stack);
+
+    // Log more details about the error
+    if (error.response) {
+      console.error("Response status:", error.response.status);
+      console.error("Response data:", error.response.data);
+    }
+
+    // Only try to write if response hasn't been sent
+    if (!res.headersSent) {
+      res.setHeader("Content-Type", "text/event-stream");
+      res.write(
+        `data: ${JSON.stringify({ error: errorMessage, done: true })}\n\n`,
+      );
+    }
     res.end();
   }
 }
