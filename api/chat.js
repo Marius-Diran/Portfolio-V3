@@ -95,7 +95,8 @@ export default async function handler(req, res) {
     }
 
     // Simple, neutral system prompt - just be helpful
-    let systemPrompt = `You are a helpful AI assistant. Answer questions accurately, thoroughly, and conversationally. Be friendly and engaged. Follow the user's lead and stay on topic.`;
+    let systemPrompt = `You are a helpful AI assistant. Answer questions accurately, thoroughly, and conversationally. Be friendly and engaged. Follow the user's lead and stay on topic. Always format code using triple backticks with a language.
+    Never return raw HTML outside code blocks.`;
 
     if (context) {
       systemPrompt += `\n\nYou also have access to information about Marius Odediran:\n\n${context}\n\nUse this information when answering questions about Marius.`;

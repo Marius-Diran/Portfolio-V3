@@ -1,139 +1,175 @@
+import { useState, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { getModelById } from "../../config/models";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-export default function ChatMessage({ message }) {
-  const isAI = message.role === "assistant";
-  const isError = message.isError;
-  const model = message.model ? getModelById(message.model) : null;
+/* =========================
+   � MESSAGE FORMATTER
+========================= */
+function formatMessage(content) {
+  // Return content as-is, let markdown handle code blocks
+  return content;
+}
+
+/* =========================
+   📋 COPY BUTTON
+========================= */
+function CopyButton({ text }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <div className={`flex gap-2 ${isAI ? "justify-start" : "justify-end"}`}>
-      {/* AI Avatar */}
+    <button
+      onClick={handleCopy}
+      className="text-xs text-gray-400 hover:text-white"
+    >
+      {copied ? "Copied ✓" : "Copy"}
+    </button>
+  );
+}
+
+/* =========================
+   🧠 CODE BLOCK
+========================= */
+function CodeBlock({ language, children }) {
+  const code = String(children).replace(/\n$/, "");
+
+  return (
+    <div className="my-4 rounded-xl border border-gray-700 bg-gray-950 w-full max-w-full overflow-hidden">
+      {/* Header */}
+      <div className="flex justify-between items-center px-3 py-2 bg-gray-900 border-b border-gray-700">
+        <span className="text-xs text-gray-400 font-mono">
+          {language || "code"}
+        </span>
+        <CopyButton text={code} />
+      </div>
+
+      {/* Code */}
+      <div className="overflow-x-auto max-w-full">
+        <SyntaxHighlighter
+          language={language}
+          style={oneDark}
+          showLineNumbers
+          wrapLines={true}
+          wrapLongLines={true} // 🔥 CRITICAL FIX
+          customStyle={{
+            margin: 0,
+            padding: "16px",
+            background: "transparent",
+            fontSize: "13px",
+            width: "100%",
+          }}
+          codeTagProps={{
+            style: {
+              whiteSpace: "pre-wrap", // 🔥 prevents overflow
+              wordBreak: "break-word",
+            },
+          }}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
+    </div>
+  );
+}
+
+/* =========================
+   💬 MAIN COMPONENT
+========================= */
+export default function ChatMessage({ message }) {
+  const isAI = message.role === "assistant";
+
+  const formattedContent = useMemo(() => {
+    return formatMessage(message.content);
+  }, [message.content]);
+
+  return (
+    <div
+      className={`flex gap-3 w-full ${isAI ? "justify-start" : "justify-end"}`}
+    >
+      {/* Avatar */}
       {isAI && (
-        <div className="flex flex-col items-center gap-1">
-          <div className="w-6 h-6 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center shrink-0 text-xs font-semibold text-gray-900 dark:text-white">
-            M
-          </div>
-          {model && (
-            <span className="text-xs text-gray-600 dark:text-gray-500 font-medium">
-              {model.name}
-            </span>
-          )}
+        <div className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white shrink-0">
+          M
         </div>
       )}
 
-      {/* Message */}
+      {/* Message Container */}
       <div
-        className={
+        className={`min-w-0 ${
           isAI
-            ? isError
-              ? "max-w-2xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-200 px-4 py-2.5 rounded-lg"
-              : "max-w-2xl text-gray-900 dark:text-gray-100"
-            : "max-w-xl text-white bg-blue-600 dark:bg-blue-700 px-4 py-2.5 rounded-lg"
-        }
+            ? "w-full overflow-hidden"
+            : "max-w-[78%] md:max-w-[72%] ml-auto flex justify-end"
+        }`}
       >
-        {isAI && !isError ? (
-          <ReactMarkdown
-            components={{
-              p: ({ node, ...props }) => (
-                <p
-                  className="mb-2 last:mb-0 text-sm leading-relaxed"
-                  {...props}
-                />
-              ),
-              h1: ({ node, ...props }) => (
-                <h1
-                  className="text-lg font-semibold mb-2 mt-3 first:mt-0"
-                  {...props}
-                />
-              ),
-              h2: ({ node, ...props }) => (
-                <h2
-                  className="text-base font-semibold mb-2 mt-3 first:mt-0"
-                  {...props}
-                />
-              ),
-              h3: ({ node, ...props }) => (
-                <h3
-                  className="text-sm font-semibold mb-2 mt-3 first:mt-0"
-                  {...props}
-                />
-              ),
-              ul: ({ node, ...props }) => (
-                <ul
-                  className="list-disc list-inside mb-2 last:mb-0 ml-2 text-sm"
-                  {...props}
-                />
-              ),
-              ol: ({ node, ...props }) => (
-                <ol
-                  className="list-decimal list-inside mb-2 last:mb-0 ml-2 text-sm"
-                  {...props}
-                />
-              ),
-              li: ({ node, ...props }) => <li className="mb-1" {...props} />,
-              strong: ({ node, ...props }) => (
-                <strong className="font-semibold" {...props} />
-              ),
-              em: ({ node, ...props }) => <em className="italic" {...props} />,
-              code: ({ node, inline, className, children, ...props }) => {
-                const match = /language-(\w+)/.exec(className || "");
-                const lang = match ? match[1] : "text";
+        {isAI ? (
+          <div className="group relative text-gray-800 dark:text-gray-100 text-sm leading-relaxed whitespace-pre-wrap wrap-break-word overflow-hidden pt-1">
+            <div className="absolute right-0 -top-1 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+              <CopyButton text={message.content} />
+            </div>
 
-                return !inline ? (
-                  <SyntaxHighlighter
-                    style={dracula}
-                    language={lang}
-                    className="rounded text-xs mb-2 p-3! m-0!"
+            <ReactMarkdown
+              skipHtml={true} // 🔥 PREVENT HTML BREAKING UI
+              components={{
+                p: (props) => <p className="mb-3 wrap-break-word" {...props} />,
+
+                code({ inline, className, children }) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  const lang = match ? match[1] : null;
+
+                  if (inline) {
+                    return (
+                      <code className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1.5 py-0.5 rounded text-xs break-all">
+                        {children}
+                      </code>
+                    );
+                  }
+
+                  return <CodeBlock language={lang}>{children}</CodeBlock>;
+                },
+
+                pre: ({ children }) => (
+                  <div className="w-full overflow-hidden">{children}</div>
+                ),
+
+                ul: (props) => (
+                  <ul className="list-disc ml-4 space-y-1" {...props} />
+                ),
+
+                ol: (props) => (
+                  <ol className="list-decimal ml-4 space-y-1" {...props} />
+                ),
+
+                a: (props) => (
+                  <a
+                    className="text-blue-600 dark:text-blue-400 underline break-all"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     {...props}
-                  >
-                    {String(children).replace(/\n$/, "")}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code
-                    className="bg-gray-200 dark:bg-gray-800 px-1 py-0.5 rounded text-xs font-mono"
-                    {...props}
-                  >
-                    {children}
-                  </code>
-                );
-              },
-              pre: ({ node, ...props }) => (
-                <pre className="mb-2 last:mb-0" {...props} />
-              ),
-              a: ({ node, ...props }) => (
-                <a
-                  className="text-blue-600 dark:text-blue-400 hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  {...props}
-                />
-              ),
-              blockquote: ({ node, ...props }) => (
-                <blockquote
-                  className="border-l-2 border-gray-300 dark:border-gray-600 pl-3 italic mb-2 last:mb-0 text-sm text-gray-600 dark:text-gray-400"
-                  {...props}
-                />
-              ),
-              hr: ({ node, ...props }) => (
-                <hr
-                  className="my-2 border-gray-200 dark:border-gray-700"
-                  {...props}
-                />
-              ),
-            }}
-          >
-            {message.content}
-          </ReactMarkdown>
+                  />
+                ),
+
+                blockquote: (props) => (
+                  <blockquote className="border-l-2 border-gray-300 dark:border-gray-600 pl-3 italic text-gray-600 dark:text-gray-400 my-3">
+                    {props.children}
+                  </blockquote>
+                ),
+              }}
+            >
+              {formattedContent}
+            </ReactMarkdown>
+          </div>
         ) : (
-          <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+          <div className="inline-block w-fit max-w-full bg-gray-800 text-white px-4 py-2.5 rounded-3xl text-sm whitespace-pre-wrap wrap-break-word leading-relaxed">
+            {message.content}
+          </div>
         )}
       </div>
-
-      {/* User avatar spacer */}
-      {!isAI && <div className="w-6 h-6" />}
     </div>
   );
 }
