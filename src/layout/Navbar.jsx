@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "../components/Buttons";
 import AiButton from "../components/Aibutton";
 import { Bot, Menu, X } from "lucide-react";
-import logo from "../assets/M.png";
+import logo from "../assets/M-New.png";
 import { Link } from "react-router-dom";
 
 const navLinks = [
