@@ -1,5 +1,5 @@
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
-import logo from "../assets/M.png";
+import logo from "../assets/M-New.png";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/Marius-Diran", label: "GitHub" },
